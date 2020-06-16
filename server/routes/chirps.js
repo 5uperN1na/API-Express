@@ -9,7 +9,7 @@ let router = express.Router();
 
 // });
 
-
+let customers = [];
 
 //GET method
 router.get('/:id?', (req, res) => {
@@ -25,10 +25,19 @@ router.get('/:id?', (req, res) => {
 
 router.post('/', (req, res) => {
     cStore.CreateChirp(req.body);
-    res.sendStatus(200);
+    //res.sendStatus(200);
+    let customer = {};
+    customer.firstname = req.body.firstname;
+    customer.comment = req.body.comment;
+    
+    customers.push(customer);
+    
+    return res.send(customer);
 
 });
 
+
+ 
 
 //DELETE method
 
@@ -43,6 +52,7 @@ router.delete('/:id?', (req, res) => {
 router.put('/:id?', (req, res) => {
     let id = req.params.id;
     id ? res.json(cStore.UpdateChirp(id)) : res.sendStatus(404);
+    let data = req.body;
 });
 
 
