@@ -17,7 +17,17 @@ router.get('/:id?', (req, res) => {
     if (id) {
         res.json(cStore.GetChirp(id));
     } else {
-        res.send(cStore.GetChirps());
+        const raw = cStore.GetChirps()
+        const customers = Object.keys(raw).map(key =>{
+            return{
+                id: key,
+                comment: raw[key].comment,
+                firstname: raw[key].firstname
+
+            }
+        })
+        customers.pop();
+        res.send(customers);
     }
 });
 
@@ -43,7 +53,8 @@ router.post('/', (req, res) => {
 
 router.delete('/:id?', (req, res) => {
     let id = req.params.id;
-    id ? res.json(cStore.DeleteChirp(id)) : res.sendStatus(404);
+    cStore.DeleteChirp(id)
+    id ? res.send("deleted") : res.sendStatus(404);
 });
 
 
@@ -51,8 +62,9 @@ router.delete('/:id?', (req, res) => {
 
 router.put('/:id?', (req, res) => {
     let id = req.params.id;
-    id ? res.json(cStore.UpdateChirp(id)) : res.sendStatus(404);
     let data = req.body;
+    cStore.UpdateChirp(id, data)
+    id ? res.send("edited"): res.sendStatus(404);
 });
 
 
