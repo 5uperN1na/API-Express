@@ -9,8 +9,8 @@ function getChirps() {
         data.forEach(customer => {
             $('.list-group').append(`
             <li class="list-group-item">${customer.firstname}: ${customer.comment} 
-            <button onclick="deleteChirp(${customer.id})" id="deleteChirp" type="button" class="btn btn-default">X</button>
-            
+            <button onclick="deleteChirp(${customer.id})" id="deleteChirp" type="button" class="btn btn-default">Delete</button>
+            <button onclick="editChirp(${customer.id})" id="editChirp" type="button" class="btn btn-default">Edit</button>
             </li>
             `)
 
@@ -20,7 +20,7 @@ function getChirps() {
 
 }
 
-function postChirp(firstname_new, comment_new){
+function postChirp(firstname_new, comment_new) {
     $.ajax({
         url: "/api/chirps/",
         type: "POST",
@@ -28,16 +28,18 @@ function postChirp(firstname_new, comment_new){
             firstname: firstname_new,
             comment: comment_new
         }
-    }).then(()=> {
+    }).then(() => {
         $('#comment').val('');
-       $('#firstname').val('');
+        $('#firstname').val('');
         getChirps();
     })
 }
 
 getChirps();
 
-$("#postChirp").click((e) =>{
+//event listener submit button from /client/index.html and call to .ajax post chirp function
+
+$("#postChirp").click((e) => {
     e.preventDefault();
     let newComment = $('#comment').val();
     let newFirstName = $('#firstname').val();
@@ -45,25 +47,44 @@ $("#postChirp").click((e) =>{
 
 })
 
+//.ajax delete function with call to get updated chirp list
 
-function deleteChirp(id){
+function deleteChirp(id) {
     $.ajax({
         url: `/api/chirps/${id}`,
         type: "DELETE",
 
-    }).then(() =>{
+    }).then(() => {
         getChirps();
 
     })
 
 }
 
+//.ajax edit function with call to get updated chirp list
 
+function editChirp(id) {
 
+    swal({
+        title: "Update!",
+        text: "Edit the chirp below.",
+        content: "input",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Chirp updated!",
+        closeOnConfirm: false
+    })
 
+    $.ajax({
+        url: `/api/chirps/${id}`,
+        type: "PUT",
 
+    }).then(() => {
+        getChirps();
 
-
+    })
+}
 
     // $.ajax({
     //     url: "/api/chirps/id",
@@ -75,38 +96,6 @@ function deleteChirp(id){
     // }).then(data => {
     //     console.log(data);
     // })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // // const { response } = require("express");
