@@ -62,7 +62,7 @@ function deleteChirp(id) {
 
 }
 
-//.ajax edit function with call to get updated chirp list
+//.ajax edit function with call to get updated chirp list with sweet alert modal to edit chirip
 
 
 function editChirp(id, firstname, comment) {

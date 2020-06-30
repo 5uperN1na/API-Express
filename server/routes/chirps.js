@@ -47,8 +47,6 @@ router.post('/', (req, res) => {
 });
 
 
- 
-
 //DELETE method
 
 router.delete('/:id?', (req, res) => {
