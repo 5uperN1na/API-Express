@@ -8,9 +8,10 @@ function getChirps() {
         $('.list-group').empty();
         data.forEach(customer => {
             $('.list-group').append(`
-            <li class="list-group-item">${customer.firstname}: ${customer.comment} 
-            <button onclick="deleteChirp(${customer.id})" id="deleteChirp" type="button" class="btn btn-default">Delete</button>
-            <button onclick="editChirp ('${customer.id}', '${customer.firstname}', '${customer.comment}')" id="editChirp" type="button" class="btn btn-default">Edit</button>
+            <li class="list-group-item"><b>${customer.firstname}</b> says: <i>${customer.comment} <i/>
+            <button onclick="deleteChirp(${customer.id})" id="deleteChirp" type="button" class="btn btn-danger float-right">Delete</button>
+            
+            <button onclick="editChirp ('${customer.id}', '${customer.firstname}', '${customer.comment}')" id="editChirp" type="button" class="btn btn-warning float-right">Edit</button>
             </li>
             `)
 
@@ -70,7 +71,7 @@ function editChirp(id, firstname, comment) {
     console.log({ firstname, comment });
 
     Swal.fire({
-        title: 'Edit chirp' + id,
+        title: 'Ready to edit this chirp?',
         input: 'text',
         inputValue: comment,
         showCancelButton: true,
